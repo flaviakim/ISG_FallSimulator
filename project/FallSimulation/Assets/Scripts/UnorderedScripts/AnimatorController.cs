@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlSlave : MonoBehaviour {
+public class AnimatorController : MonoBehaviour {
 
     [SerializeField] private Animator anim;
 
@@ -20,7 +20,7 @@ public class ControlSlave : MonoBehaviour {
     private bool toggleIK;
 
     [SerializeField] private FromAnimToRagdoll fatr;
-    // Start is called before the first frame update
+
     void Start() {
         startingPos = transform.position;
         startingRot = transform.rotation;
@@ -29,7 +29,6 @@ public class ControlSlave : MonoBehaviour {
         fatr.ReturnToAnimation += StopIK;
     }
 
-    // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Keypad1)) {
             anim.SetTrigger("Walk");

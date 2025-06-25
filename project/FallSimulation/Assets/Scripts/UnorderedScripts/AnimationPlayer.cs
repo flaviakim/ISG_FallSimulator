@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class animation_player : MonoBehaviour {
+public class AnimationPlayer : MonoBehaviour {
 	[SerializeField] private Animator anim;
 	[SerializeField] private RuntimeAnimatorController[] controllers;
 	[SerializeField] private int maxAnims;

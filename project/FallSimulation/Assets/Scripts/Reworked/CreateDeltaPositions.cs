@@ -11,7 +11,7 @@ public class CreateDeltaPositions : MonoBehaviour {
 	[SerializeField] private AnimController anim;
 
 
-	[SerializeField] private animation_player animPlayer;
+	[SerializeField] private AnimationPlayer animPlayer;
 
 	private int countNotFall;
 	private Vector3 lastPos;
