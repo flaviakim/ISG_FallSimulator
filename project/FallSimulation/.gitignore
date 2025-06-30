@@ -1,3 +1,10 @@
+# HouseProps' Textures are way too big and should be downloaded individually. Only add the .meta files
+/Assets/HouseProps/Textures/*.tif
+/Assets/HouseProps/Textures/Building/*.tif
+/Assets/HouseProps/URP/*
+/Assets/HouseProps/HDRP/*
+
+
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore

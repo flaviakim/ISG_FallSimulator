@@ -15,7 +15,7 @@ public class AnimationPlayer : MonoBehaviour {
 	public Action startedPlayingAnim;
 
 	private void Start() {
-		AnimatorChanged.Invoke(anim.runtimeAnimatorController.name);
+		AnimatorChanged?.Invoke(anim.runtimeAnimatorController.name);
 		GameManager.Instance.OnAdvanceController += AdvanceController;
 		GameManager.Instance.OnPlayRandomNotFallAnim += PlayRandomAnim;
 		GameManager.Instance.OnReturnNewState += ReturnNewStateTrigger;
@@ -29,7 +29,7 @@ public class AnimationPlayer : MonoBehaviour {
 
 	public void ChangeController(int index) {
 		anim.runtimeAnimatorController = controllers[index];
-		AnimatorChanged.Invoke(anim.runtimeAnimatorController.name);
+		AnimatorChanged?.Invoke(anim.runtimeAnimatorController.name);
 		GameManager.Instance.Status = ConstantsMovements.idle;
 		GameManager.Instance.AdvanceController_();
 	}
