@@ -129,11 +129,11 @@ public class FromAnimToRagdoll : MonoBehaviour {
         isOnRagdoll = true;
         mainRBody.useGravity = false;
         anim.enabled = false;
-        mainRBody.velocity = Vector3.zero;
+        mainRBody.linearVelocity = Vector3.zero;
 
         for (int i = 0; i < ragdollShits.Length; i++) {
             ragdollShits[i].ragdollCollider.isTrigger = false;
-            ragdollShits[i].rbody.velocity = UnityEngine.Random.Range(ragdollShits[i].minMaxForceToApplyOnRagdoll.x, 
+            ragdollShits[i].rbody.linearVelocity = UnityEngine.Random.Range(ragdollShits[i].minMaxForceToApplyOnRagdoll.x, 
                 ragdollShits[i].minMaxForceToApplyOnRagdoll.y) * ragdollShits[i].direction;
         }
         status = ConstantsMovements.fall;
@@ -144,7 +144,7 @@ public class FromAnimToRagdoll : MonoBehaviour {
 
         for (int i = 0; i < ragdollShits.Length; i++) {
             ragdollShits[i].ragdollCollider.isTrigger = true;
-            ragdollShits[i].rbody.velocity = Vector3.zero;
+            ragdollShits[i].rbody.linearVelocity = Vector3.zero;
         }
 
         anim.enabled = true;

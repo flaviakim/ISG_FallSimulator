@@ -368,7 +368,7 @@ namespace AnimFollow
 					animFollow.SetJointTorque (animFollow.maxJointTorque); // Do not wait for animfollow.secondaryUpdate
 
 					// Orientate master to ragdoll and start transition to getUp when settled on the ground. Falling is over, getting up commences
-					if (ragdollRootBone.GetComponent<Rigidbody>().velocity.magnitude < settledSpeed) // && contactTime + noContactTime > .4f)
+					if (ragdollRootBone.GetComponent<Rigidbody>().linearVelocity.magnitude < settledSpeed) // && contactTime + noContactTime > .4f)
 					{
 						gettingUp = true;
 						orientate = true;
@@ -513,7 +513,7 @@ namespace AnimFollow
 			{
 				if (animator.cullingMode != AnimatorCullingMode.AlwaysAnimate)
 					Debug.Log ("Animator cullingmode on " + this.name + " is not set to always animate.\nIf the masteris hidden the animations will not run." + "\n");
-				if (!animator.updateMode.Equals(AnimatorUpdateMode.AnimatePhysics))
+				if (!animator.updateMode.Equals(AnimatorUpdateMode.Fixed))
 					Debug.Log ("Animator on " + this.name + " is not set to animate physics" + "\n");
 			}
 

@@ -102,11 +102,11 @@ public class AnimController : MonoBehaviour {
 		isOnRagdoll = true;
 		mainRBody.useGravity = false;
 		anim.enabled = false;
-		mainRBody.velocity = Vector3.zero;
+		mainRBody.linearVelocity = Vector3.zero;
 
 		for (int i = 0; i < ragdollShits.Length; i++) {
 			ragdollShits[i].ragdollCollider.isTrigger = false;
-			ragdollShits[i].rbody.velocity = Vector3.zero;
+			ragdollShits[i].rbody.linearVelocity = Vector3.zero;
 		}
 
 		if (addForces) {
@@ -147,7 +147,7 @@ public class AnimController : MonoBehaviour {
 	public void StartWalking() {
 		for (int i = 0; i < ragdollShits.Length; i++) {
 			ragdollShits[i].ragdollCollider.isTrigger = true;
-			ragdollShits[i].rbody.velocity = Vector3.zero;
+			ragdollShits[i].rbody.linearVelocity = Vector3.zero;
 		}
 
 		anim.enabled = true;
