@@ -231,7 +231,7 @@ namespace AnimFollow
 						localToJointSpace[j] = Quaternion.LookRotation(forward, up);
 						startLocalRotation[j] = slaveTransform.localRotation * localToJointSpace[j];
 						jointDrive = configurableJoints[j].slerpDrive;
-						jointDrive.mode = JointDriveMode.Position;
+						// jointDrive.mode = JointDriveMode.Position;
 						configurableJoints[j].slerpDrive = jointDrive;
 						l++;
 					}
