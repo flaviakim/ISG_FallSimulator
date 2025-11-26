@@ -8460,6 +8460,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 259566471}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &260145968 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6482195950610827991, guid: d87b073b2863d4d54ad1f97c7fb90c83,
+    type: 3}
+  m_PrefabInstance: {fileID: 2049577009}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &270542016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20078,6 +20084,51 @@ Rigidbody:
     type: 3}
   m_PrefabInstance: {fileID: 959545147}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &642399698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 642399699}
+  - component: {fileID: 642399700}
+  m_Layer: 0
+  m_Name: PosePointRightWrist
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &642399699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642399698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1916237945}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &642399700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642399698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff5e15a2d5314b97a8609b954a565f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VideoRecording.PosePoint
+  <PoseID>k__BackingField: 16
 --- !u!1001 &648886754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43524,6 +43575,64 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1436321444}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1436890335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1436890336}
+  - component: {fileID: 1436890337}
+  m_Layer: 0
+  m_Name: PoseRecorder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1436890336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436890335}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1436890337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436890335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ad4a625525459f8cd7a066cf253844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VideoRecording.PoseRecorder
+  fallCenterPosition: {fileID: 260145968}
+  personOriginPosition: {fileID: 1946945243}
+  numberOfCameras: 5
+  fovMin: 60
+  fovMax: 60
+  distanceFromCenterMin: 5
+  distanceFromCenterMax: 10
+  angleVariance: 10
+  heightMin: 1
+  heightMax: 3
+  outputFolder: PoseRecordings
+  fileName: fall_recording
+  frameRate: 30
+  highestPoseID: 32
 --- !u!1001 &1439960330
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48498,7 +48607,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1545661380742257315, guid: b20ffe33a65b04af1bf0fb07b0ae80e6, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1776519748069386901, guid: b20ffe33a65b04af1bf0fb07b0ae80e6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1946945243}
+    - targetCorrespondingSourceObject: {fileID: 7993698189370449067, guid: b20ffe33a65b04af1bf0fb07b0ae80e6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1783094173}
+    - targetCorrespondingSourceObject: {fileID: 677845713623256944, guid: b20ffe33a65b04af1bf0fb07b0ae80e6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 642399699}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b20ffe33a65b04af1bf0fb07b0ae80e6, type: 3}
 --- !u!1001 &1566779113
@@ -56862,6 +56983,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1776329452}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1783094172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1783094173}
+  - component: {fileID: 1783094174}
+  m_Layer: 0
+  m_Name: PosePointLeftWrist
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1783094173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783094172}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1852002772}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1783094174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783094172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff5e15a2d5314b97a8609b954a565f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VideoRecording.PosePoint
+  <PoseID>k__BackingField: 15
 --- !u!1001 &1783191124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62434,6 +62600,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1946142505}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1946945242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1946945243}
+  m_Layer: 0
+  m_Name: OriginPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1946945243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946945242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1578869589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1951205598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66500,7 +66697,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2041659424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70886,3 +71083,4 @@ SceneRoots:
   - {fileID: 138651473}
   - {fileID: 2041659425}
   - {fileID: 960573253}
+  - {fileID: 1436890336}
