@@ -1,3 +1,5 @@
+/PoseRecordings
+
 # HouseProps' Textures are way too big and should be downloaded individually. Only add the .meta files
 /Assets/HouseProps/Textures/*.tif
 /Assets/HouseProps/Textures/Building/*.tif
