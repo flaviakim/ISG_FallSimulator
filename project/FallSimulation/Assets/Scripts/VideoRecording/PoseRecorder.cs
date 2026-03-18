@@ -27,7 +27,7 @@ namespace VideoRecording {
 
         [Header("Recording Settings")]
         [SerializeField] private RecordingMode mode        = RecordingMode.Json;
-        [SerializeField] private string        outputFolder = "PoseRecordings";
+        [SerializeField] private string        rootOutputFolder = "PoseRecordings";
         [SerializeField] private string        fileName     = "fall_recording";
         [SerializeField] private int           frameRate    = 30;
         [SerializeField] private int           highestPoseID = 32;
@@ -130,6 +130,8 @@ namespace VideoRecording {
 
             CameraPosition[] positions = GetCameraPositions();
             DateTime         startTime = DateTime.Now;
+            
+            var outputFolder = Path.Combine(rootOutputFolder, $"{startTime:yyyy-MM-dd_HH-mm-ss}");
 
             if (!Directory.Exists(outputFolder)) {
                 Directory.CreateDirectory(outputFolder);
