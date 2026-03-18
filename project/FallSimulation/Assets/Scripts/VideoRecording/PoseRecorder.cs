@@ -76,7 +76,7 @@ namespace VideoRecording {
             _posePoints.AddRange(posePoints);
         }
 
-        private void Update() {
+        private void FixedUpdate() {
             if (IsRecording) {
                 RecordFrame();
             }
