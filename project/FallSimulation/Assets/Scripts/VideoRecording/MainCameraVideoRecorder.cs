@@ -26,9 +26,10 @@ namespace VideoRecording {
             _movieSettings.CaptureAlpha           = false;
 
             var cameraInput = new CameraInputSettings {
-                Source        = ImageSource.MainCamera,
-                OutputWidth   = 1280,
-                OutputHeight  = 720,
+                Source          = ImageSource.MainCamera,
+                OutputWidth     = 1280,
+                OutputHeight    = 720,
+                FlipFinalOutput = true,
             };
             _movieSettings.ImageInputSettings = cameraInput;
 
