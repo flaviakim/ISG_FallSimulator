@@ -24,6 +24,9 @@ namespace VideoRecording {
         [SerializeField] private float heightMin              = 1f;
         [SerializeField] private float heightMax              = 3f;
         [SerializeField] private float aboveHeadHeightThreshold = 1.8f;
+        [SerializeField] private float aspectRatio             = 16f / 9f;
+        [SerializeField] private float nearClip                = 0.1f;
+        [SerializeField] private float farClip                 = 100f;
 
         [Header("Recording Settings")]
         [SerializeField] private RecordingMode mode             = RecordingMode.Json;
@@ -31,7 +34,7 @@ namespace VideoRecording {
         [SerializeField] private string        fileName         = "fall_recording";
         [SerializeField] private int           frameRate        = 30;
         [SerializeField] private int           highestPoseID    = 32;
-        [SerializeField] private bool          flipOutput       = true;
+        [SerializeField] private bool          flipYAxisOutput  = false;
         
 
         public bool IsRecording { get; private set; }
@@ -128,50 +131,37 @@ namespace VideoRecording {
         }
 
         private void BuildCameras() {
-            // Destroy any previously created camera GameObjects whose recorders were disposed.
-            foreach (Transform child in transform) {
-                if (child.name.StartsWith("Camera_")) {
-                    Destroy(child.gameObject);
-                }
-            }
-            _cameraRecorders.Clear();
+            _cameraRecorders.Clear();  // no GameObjects to destroy anymore
 
             if (fallCenterPosition == null) return;
 
             CameraPosition[] positions = GetCameraPositions();
             DateTime         startTime = DateTime.Now;
-            
-            var outputFolder = Path.Combine(rootOutputFolder, $"{startTime:yyyy-MM-dd_HH-mm-ss}");
 
-            if (!Directory.Exists(outputFolder)) {
-                Directory.CreateDirectory(outputFolder);
-            }
+            var outputFolder = Path.Combine(rootOutputFolder, $"{startTime:yyyy-MM-dd_HH-mm-ss}");
+            if (!Directory.Exists(outputFolder)) Directory.CreateDirectory(outputFolder);
 
 #if UNITY_EDITOR
             string videoFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_main_camera");
-            _videoRecorder = new MainCameraVideoRecorder(videoFilePath, frameRate, flipOutput);
+            _videoRecorder = new MainCameraVideoRecorder(videoFilePath, frameRate, flipYAxisOutput);
 #endif
 
             float subjectY = fallCenterPosition.position.y;
 
             for (int i = 0; i < numberOfCameras; i++) {
-                GameObject cameraObj = new GameObject($"Camera_{i + 1}");
-                cameraObj.transform.SetParent(transform);
-                cameraObj.transform.position = positions[i].Position;
-                cameraObj.transform.rotation = positions[i].Rotation;
+                var virtualCam = new VirtualCamera(
+                    positions[i].Position,
+                    positions[i].Rotation,
+                    positions[i].FOV,
+                    aspectRatio,
+                    nearClip,
+                    farClip);
 
-                Camera cam = cameraObj.AddComponent<Camera>();
-                cam.fieldOfView    = Random.Range(fovMin, fovMax);
-                cam.clearFlags     = CameraClearFlags.SolidColor;
-                cam.backgroundColor = Color.black;
-
-                string heightLabel = CameraHeightClassifier.Classify(positions[i].Position.y, subjectY, aboveHeadHeightThreshold);
-
+                string heightLabel  = CameraHeightClassifier.Classify(positions[i].Position.y, subjectY, aboveHeadHeightThreshold);
                 string baseFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_{i}");
-
                 IRecordingStrategy strategy = RecordingStrategyFactory.Create(mode, baseFilePath, highestPoseID, heightLabel);
 
-                _cameraRecorders.Add(new SingleCameraRecorder(cam, strategy, highestPoseID, flipOutput));
+                _cameraRecorders.Add(new SingleCameraRecorder(virtualCam, strategy, highestPoseID, flipYAxisOutput));
             }
         }
 

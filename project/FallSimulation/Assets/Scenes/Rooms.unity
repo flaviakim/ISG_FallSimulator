@@ -43978,7 +43978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VideoRecording.PoseRecorder
   fallCenterPosition: {fileID: 260145968}
-  numberOfCameras: 10
+  numberOfCameras: 30
   fovMin: 60
   fovMax: 60
   distanceFromCenterMin: 5
@@ -43987,12 +43987,15 @@ MonoBehaviour:
   heightMin: 1
   heightMax: 3
   aboveHeadHeightThreshold: 1.8
+  aspectRatio: 1.7777778
+  nearClip: 0.1
+  farClip: 100
   mode: 1
   rootOutputFolder: PoseRecordings
   fileName: fall_recording
   frameRate: 30
   highestPoseID: 32
-  flipOutput: 1
+  flipYAxisOutput: 0
 --- !u!1001 &1439960330
 PrefabInstance:
   m_ObjectHideFlags: 0
