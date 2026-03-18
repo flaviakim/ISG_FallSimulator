@@ -1,4 +1,9 @@
+
+### Project Specific
+
+Assets/StreamingAssets/outcsvs/**
 /PoseRecordings
+
 
 # HouseProps' Textures are way too big and should be downloaded individually. Only add the .meta files
 /Assets/HouseProps/Textures/*.tif
@@ -107,7 +112,3 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-
-### Project Specific
-
-Assets/StreamingAssets/outcsvs/**
