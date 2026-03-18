@@ -31,10 +31,7 @@ namespace VideoRecording {
         [SerializeField] private string        fileName     = "fall_recording";
         [SerializeField] private int           frameRate    = 30;
         [SerializeField] private int           highestPoseID = 32;
-
-        [Header("Label Settings (JSON only)")]
-        [SerializeField] private float  label    = 0f;
-        [SerializeField] private string labelStr = "walk";
+        
 
         public bool IsRecording { get; private set; }
 
@@ -150,14 +147,11 @@ namespace VideoRecording {
                 cam.clearFlags     = CameraClearFlags.SolidColor;
                 cam.backgroundColor = Color.black;
 
-                string heightLabel = CameraHeightClassifier.Classify(
-                    positions[i].Position.y, subjectY, aboveHeadHeightThreshold);
+                string heightLabel = CameraHeightClassifier.Classify(positions[i].Position.y, subjectY, aboveHeadHeightThreshold);
 
-                string baseFilePath = Path.Combine(outputFolder,
-                    $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_{i}");
+                string baseFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_{i}");
 
-                IRecordingStrategy strategy = RecordingStrategyFactory.Create(
-                    mode, baseFilePath, highestPoseID, label, labelStr, heightLabel);
+                IRecordingStrategy strategy = RecordingStrategyFactory.Create(mode, baseFilePath, highestPoseID, heightLabel);
 
                 _cameraRecorders.Add(new SingleCameraRecorder(cam, strategy, highestPoseID));
             }

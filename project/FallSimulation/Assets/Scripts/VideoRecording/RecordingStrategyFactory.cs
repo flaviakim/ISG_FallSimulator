@@ -11,20 +11,13 @@ namespace VideoRecording {
             RecordingMode mode,
             string        filePath,
             int           highestPoseID,
-            float         label                = 0f,
-            string        labelStr             = "",
             string        cameraHeightPosition = "") {
-
-            switch (mode) {
-                case RecordingMode.Csv:
-                    return new CsvRecordingStrategy(filePath + ".csv", highestPoseID);
-
-                case RecordingMode.Json:
-                    return new JsonRecordingStrategy(filePath + ".json", label, labelStr, cameraHeightPosition);
-
-                default:
-                    throw new System.ArgumentOutOfRangeException(nameof(mode), mode, "Unknown recording mode.");
-            }
+            
+            return mode switch {
+                RecordingMode.Csv => new CsvRecordingStrategy(filePath + ".csv", highestPoseID),
+                RecordingMode.Json => new JsonRecordingStrategy(filePath + ".json", cameraHeightPosition),
+                _ => throw new System.ArgumentOutOfRangeException(nameof(mode), mode, "Unknown recording mode.")
+            };
         }
     }
 }

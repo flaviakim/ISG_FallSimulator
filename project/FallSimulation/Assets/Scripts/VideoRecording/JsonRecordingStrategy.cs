@@ -27,16 +27,12 @@ namespace VideoRecording {
         // ---- fields -------------------------------------------------------
 
         private readonly string _filePath;
-        private readonly float  _label;
-        private readonly string _labelStr;
         private readonly string _cameraHeightPosition;
         private readonly List<FrameEntry> _frames = new();
         private bool _finalized;
 
-        public JsonRecordingStrategy(string filePath, float label, string labelStr, string cameraHeightPosition) {
+        public JsonRecordingStrategy(string filePath, string cameraHeightPosition) {
             _filePath             = filePath;
-            _label                = label;
-            _labelStr             = labelStr;
             _cameraHeightPosition = cameraHeightPosition;
         }
 
@@ -65,8 +61,8 @@ namespace VideoRecording {
             _frames.Add(new FrameEntry {
                 FrameIndex           = frame.FrameIndex,
                 Time                 = frame.Time,
-                Label                = _label,
-                LabelStr             = _labelStr,
+                Label                = 0.0f,
+                LabelStr             = GameManager.Instance.Status,
                 CameraHeightPosition = _cameraHeightPosition,
                 Skeleton             = new[] {
                     new SkeletonEntry { Pose = pose, Score = score }
