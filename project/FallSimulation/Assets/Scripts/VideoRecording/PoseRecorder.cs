@@ -40,6 +40,10 @@ namespace VideoRecording {
         private readonly List<PosePoint>           _posePoints      = new();
         private readonly List<SingleCameraRecorder> _cameraRecorders = new();
 
+#if UNITY_EDITOR
+        private MainCameraVideoRecorder _videoRecorder;
+#endif
+
         // ---- Unity lifecycle ----------------------------------------------
 
         private void Start() {
@@ -47,16 +51,14 @@ namespace VideoRecording {
                 Debug.LogError("PoseRecorder: Fall Center Position is not set.");
                 return;
             }
-
-            // BuildCameras();
-
+            
             var posePoints = FindObjectsByType<PosePoint>(FindObjectsSortMode.None)
                              .OrderBy(pp => pp.PoseID);
             _posePoints.AddRange(posePoints);
 
             // Wire GameManager events
             if (GameManager.Instance != null) {
-                GameManager.Instance.OnStartRecording          += StartRecording;
+                GameManager.Instance.OnStartRecording             += StartRecording;
                 GameManager.Instance.OnEndRecordingAndWriteToFile += StopRecording;
             }
         }
@@ -83,6 +85,9 @@ namespace VideoRecording {
             foreach (var recorder in _cameraRecorders) {
                 recorder.Open();
             }
+#if UNITY_EDITOR
+            _videoRecorder?.StartRecording();
+#endif
             _recordingStartTime = Time.time;
             IsRecording = true;
         }
@@ -95,6 +100,10 @@ namespace VideoRecording {
                 recorder.Dispose();
             }
             _cameraRecorders.Clear();
+#if UNITY_EDITOR
+            _videoRecorder?.Dispose();
+            _videoRecorder = null;
+#endif
         }
 
         // ---- Gizmos -------------------------------------------------------
@@ -136,6 +145,11 @@ namespace VideoRecording {
             if (!Directory.Exists(outputFolder)) {
                 Directory.CreateDirectory(outputFolder);
             }
+
+#if UNITY_EDITOR
+            string videoFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_main_camera");
+            _videoRecorder = new MainCameraVideoRecorder(videoFilePath, frameRate);
+#endif
 
             float subjectY = fallCenterPosition.position.y;
 
