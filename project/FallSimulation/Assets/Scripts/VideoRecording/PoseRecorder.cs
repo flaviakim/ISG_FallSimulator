@@ -15,7 +15,7 @@ namespace VideoRecording {
         [SerializeField] private Transform fallCenterPosition;
 
         [Header("Camera Settings")]
-        [SerializeField] private int   numberOfCameras        = 5;
+        [SerializeField] private int   numberOfCameras        = 10;
         [SerializeField] private float fovMin                 = 60f;
         [SerializeField] private float fovMax                 = 60f;
         [SerializeField] private float distanceFromCenterMin  = 5f;
