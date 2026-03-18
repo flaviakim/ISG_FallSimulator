@@ -17,7 +17,8 @@ namespace VideoRecording {
 
         /// <param name="outputFilePath">Full path without extension, e.g. "PoseRecordings/2024-01-01_00-00-00/fall_recording_..._main_camera"</param>
         /// <param name="frameRate">Target frame rate (frames per second).</param>
-        public MainCameraVideoRecorder(string outputFilePath, int frameRate) {
+        /// <param name="flipOutput">When true, each captured frame is flipped vertically to correct Y-axis inversion (OpenGL/Metal).</param>
+        public MainCameraVideoRecorder(string outputFilePath, int frameRate, bool flipOutput = false) {
             _movieSettings = ScriptableObject.CreateInstance<MovieRecorderSettings>();
             _movieSettings.name                   = "MainCameraVideo";
             _movieSettings.Enabled                = true;
@@ -29,7 +30,7 @@ namespace VideoRecording {
                 Source          = ImageSource.MainCamera,
                 OutputWidth     = 1280,
                 OutputHeight    = 720,
-                FlipFinalOutput = true,
+                FlipFinalOutput = flipOutput,
             };
             _movieSettings.ImageInputSettings = cameraInput;
 

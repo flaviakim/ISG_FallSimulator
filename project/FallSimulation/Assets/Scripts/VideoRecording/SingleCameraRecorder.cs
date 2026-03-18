@@ -5,20 +5,22 @@ using UnityEngine;
 namespace VideoRecording {
     /// <summary>
     /// Owns a <see cref="Camera"/> and an <see cref="IRecordingStrategy"/>.
-    /// Applies Y-flip before handing data to the strategy so all strategies
-    /// receive consistent, corrected viewport coordinates.
+    /// Optionally applies a Y-flip before handing data to the strategy so all
+    /// strategies receive consistent, corrected viewport coordinates.
     /// </summary>
     public sealed class SingleCameraRecorder : IDisposable {
         public Camera Camera { get; }
 
         private readonly IRecordingStrategy _strategy;
         private readonly int                _highestPoseID;
+        private readonly bool               _flipY;
         private bool                        _disposed;
 
-        public SingleCameraRecorder(Camera camera, IRecordingStrategy strategy, int highestPoseID) {
+        public SingleCameraRecorder(Camera camera, IRecordingStrategy strategy, int highestPoseID, bool flipY = false) {
             Camera         = camera;
             _strategy      = strategy;
             _highestPoseID = highestPoseID;
+            _flipY         = flipY;
         }
 
         /// <summary>Opens the output resource (writes header / preamble).</summary>
@@ -34,7 +36,7 @@ namespace VideoRecording {
             for (int i = 0; i < _highestPoseID; i++) {
                 if (currIndex < posePoints.Count && posePoints[currIndex].PoseID == i) {
                     Vector3 vp = Camera.WorldToViewportPoint(posePoints[currIndex].GetPosition());
-                    vp.y = 1f - vp.y; // Y-flip
+                    if (_flipY) vp.y = 1f - vp.y;
                     joints[i] = vp;
                     currIndex++;
                 } else {

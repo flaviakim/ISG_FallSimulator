@@ -26,11 +26,12 @@ namespace VideoRecording {
         [SerializeField] private float aboveHeadHeightThreshold = 1.8f;
 
         [Header("Recording Settings")]
-        [SerializeField] private RecordingMode mode        = RecordingMode.Json;
+        [SerializeField] private RecordingMode mode             = RecordingMode.Json;
         [SerializeField] private string        rootOutputFolder = "PoseRecordings";
-        [SerializeField] private string        fileName     = "fall_recording";
-        [SerializeField] private int           frameRate    = 30;
-        [SerializeField] private int           highestPoseID = 32;
+        [SerializeField] private string        fileName         = "fall_recording";
+        [SerializeField] private int           frameRate        = 30;
+        [SerializeField] private int           highestPoseID    = 32;
+        [SerializeField] private bool          flipOutput       = true;
         
 
         public bool IsRecording { get; private set; }
@@ -148,7 +149,7 @@ namespace VideoRecording {
 
 #if UNITY_EDITOR
             string videoFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_main_camera");
-            _videoRecorder = new MainCameraVideoRecorder(videoFilePath, frameRate);
+            _videoRecorder = new MainCameraVideoRecorder(videoFilePath, frameRate, flipOutput);
 #endif
 
             float subjectY = fallCenterPosition.position.y;
@@ -170,7 +171,7 @@ namespace VideoRecording {
 
                 IRecordingStrategy strategy = RecordingStrategyFactory.Create(mode, baseFilePath, highestPoseID, heightLabel);
 
-                _cameraRecorders.Add(new SingleCameraRecorder(cam, strategy, highestPoseID));
+                _cameraRecorders.Add(new SingleCameraRecorder(cam, strategy, highestPoseID, flipOutput));
             }
         }
 
