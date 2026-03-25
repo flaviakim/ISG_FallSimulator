@@ -14,18 +14,18 @@ namespace VideoRecording {
         public VirtualCamera VirtualCamera { get; }
 
         private readonly IRecordingStrategy _strategy;
-        private readonly int                _highestPoseID;
+        private readonly int                _numberOfPosePoints;
         private readonly bool               _flipY;
         private readonly Vector3?[]         _joints;   // pre-allocated; reused every frame
         private bool                        _disposed;
 
         public SingleCameraRecorder(VirtualCamera virtualCamera, IRecordingStrategy strategy,
-                                    int highestPoseID, bool flipY = false) {
+                                    int numberOfPosePoints, bool flipY = false) {
             VirtualCamera  = virtualCamera;
             _strategy      = strategy;
-            _highestPoseID = highestPoseID;
+            _numberOfPosePoints = numberOfPosePoints;
             _flipY         = flipY;
-            _joints        = new Vector3?[highestPoseID];
+            _joints        = new Vector3?[numberOfPosePoints];
         }
 
         /// <summary>Opens the output resource (writes header / preamble).</summary>
@@ -41,7 +41,7 @@ namespace VideoRecording {
             Array.Clear(_joints, 0, _joints.Length);
 
             int currIndex = 0;
-            for (int i = 0; i < _highestPoseID; i++) {
+            for (int i = 0; i < _numberOfPosePoints; i++) {
                 if (currIndex < posePoints.Count && posePoints[currIndex].PoseID == i) {
                     Vector3 vp = VirtualCamera.WorldToViewportPoint(posePoints[currIndex].GetPosition());
                     if (_flipY) vp.y = 1f - vp.y;

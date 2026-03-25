@@ -33,7 +33,7 @@ namespace VideoRecording {
         [SerializeField] private string        rootOutputFolder = "PoseRecordings";
         [SerializeField] private string        fileName         = "fall_recording";
         [SerializeField] private int           frameRate        = 30;
-        [SerializeField] private int           highestPoseID    = 32;
+        [SerializeField] private int           numberOfPosePoints    = 33;
         [SerializeField] private bool          flipYAxisOutput  = false;
         
 
@@ -159,9 +159,9 @@ namespace VideoRecording {
 
                 string heightLabel  = CameraHeightClassifier.Classify(positions[i].Position.y, subjectY, aboveHeadHeightThreshold);
                 string baseFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_{i}");
-                IRecordingStrategy strategy = RecordingStrategyFactory.Create(mode, baseFilePath, highestPoseID, heightLabel);
+                IRecordingStrategy strategy = RecordingStrategyFactory.Create(mode, baseFilePath, numberOfPosePoints, heightLabel);
 
-                _cameraRecorders.Add(new SingleCameraRecorder(virtualCam, strategy, highestPoseID, flipYAxisOutput));
+                _cameraRecorders.Add(new SingleCameraRecorder(virtualCam, strategy, numberOfPosePoints, flipYAxisOutput));
             }
         }
 
