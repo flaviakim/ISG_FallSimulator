@@ -42,7 +42,7 @@ namespace VideoRecording {
         private float _recordingStartTime;
 
         private readonly List<PosePoint>           _posePoints      = new();
-        private readonly List<SingleCameraRecorder> _cameraRecorders = new();
+        private readonly List<ISingleCameraRecorder> _cameraRecorders = new();
 
 #if UNITY_EDITOR
         private MainCameraVideoRecorder _videoRecorder;
@@ -160,9 +160,20 @@ namespace VideoRecording {
                 string heightLabel  = CameraHeightClassifier.Classify(positions[i].Position.y, subjectY, aboveHeadHeightThreshold);
                 string baseFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_{i}");
                 IRecordingStrategy strategy = RecordingStrategyFactory.Create(mode, baseFilePath, numberOfPosePoints, heightLabel);
-
                 _cameraRecorders.Add(new SingleCameraRecorder(virtualCam, strategy, numberOfPosePoints, flipYAxisOutput));
             }
+            
+            _cameraRecorders.Add(
+                new FullPoseInformationRecorder(
+                    RecordingStrategyFactory.Create(
+                        RecordingMode.Full3DCSV,
+                        Path.Combine(outputFolder, $"{fileName}_full3D_{startTime:yyyy-MM-dd_HH-mm-ss}"),
+                        numberOfPosePoints,
+                        "none"
+                    ),
+                    numberOfPosePoints
+                )
+            );
         }
 
         private CameraPosition[] GetCameraPositions() {

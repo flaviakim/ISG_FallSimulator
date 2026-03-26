@@ -9,19 +9,17 @@ namespace VideoRecording {
     /// strategies receive consistent, corrected viewport coordinates.
     /// The joints buffer is pre-allocated and reused every frame to eliminate GC pressure.
     /// </summary>
-    public sealed class SingleCameraRecorder : IDisposable {
-        /// <summary>The virtual (non-rendering) camera used for projection math.</summary>
-        public VirtualCamera VirtualCamera { get; }
-
+    public sealed class SingleCameraRecorder : ISingleCameraRecorder {
         private readonly IRecordingStrategy _strategy;
         private readonly int                _numberOfPosePoints;
         private readonly bool               _flipY;
         private readonly Vector3?[]         _joints;   // pre-allocated; reused every frame
         private bool                        _disposed;
-
+        private readonly VirtualCamera _virtualCamera;
+        
         public SingleCameraRecorder(VirtualCamera virtualCamera, IRecordingStrategy strategy,
                                     int numberOfPosePoints, bool flipY = false) {
-            VirtualCamera  = virtualCamera;
+            _virtualCamera  = virtualCamera;
             _strategy      = strategy;
             _numberOfPosePoints = numberOfPosePoints;
             _flipY         = flipY;
@@ -43,7 +41,7 @@ namespace VideoRecording {
             int currIndex = 0;
             for (int i = 0; i < _numberOfPosePoints; i++) {
                 if (currIndex < posePoints.Count && posePoints[currIndex].PoseID == i) {
-                    Vector3 vp = VirtualCamera.WorldToViewportPoint(posePoints[currIndex].GetPosition());
+                    Vector3 vp = _virtualCamera.WorldToViewportPoint(posePoints[currIndex].GetPosition());
                     if (_flipY) vp.y = 1f - vp.y;
                     _joints[i] = vp;
                     currIndex++;

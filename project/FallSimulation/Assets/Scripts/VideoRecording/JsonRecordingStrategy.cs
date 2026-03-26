@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -32,7 +33,7 @@ namespace VideoRecording {
         private bool _finalized;
 
         public JsonRecordingStrategy(string filePath, string cameraHeightPosition) {
-            _filePath             = filePath;
+            _filePath             = filePath + ".json";
             _cameraHeightPosition = cameraHeightPosition;
         }
 
@@ -49,11 +50,11 @@ namespace VideoRecording {
                 var joint = frame.Joints[i];
                 if (joint.HasValue) {
                     pose[i * 2]     = joint.Value.x;
-                    pose[i * 2 + 1] = joint.Value.y;
+                    pose[(i * 2) + 1] = joint.Value.y;
                     score[i]        = 1f;
                 } else {
                     pose[i * 2]     = 0f;
-                    pose[i * 2 + 1] = 0f;
+                    pose[(i * 2) + 1] = 0f;
                     score[i]        = 0f;
                 }
             }

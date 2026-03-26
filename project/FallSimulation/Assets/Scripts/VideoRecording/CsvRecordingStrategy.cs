@@ -13,7 +13,7 @@ namespace VideoRecording {
         private bool            _finalized;
 
         public CsvRecordingStrategy(string filePath, int highestPoseID) {
-            _filePath      = filePath;
+            _filePath      = filePath + ".csv";
             _highestPoseID = highestPoseID;
         }
 
