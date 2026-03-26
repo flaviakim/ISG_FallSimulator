@@ -40,6 +40,7 @@ namespace VideoRecording {
         public bool IsRecording { get; private set; }
 
         private float _recordingStartTime;
+        private int _frameNumber = 0;
 
         private readonly List<PosePoint>           _posePoints      = new();
         private readonly List<ISingleCameraRecorder> _cameraRecorders = new();
@@ -93,6 +94,7 @@ namespace VideoRecording {
             _videoRecorder?.StartRecording();
 #endif
             _recordingStartTime = Time.time;
+            _frameNumber = 0;
             IsRecording = true;
         }
 
@@ -122,7 +124,7 @@ namespace VideoRecording {
         // ---- Private helpers ----------------------------------------------
 
         private void RecordFrame() {
-            int   frameNumber = Time.frameCount;
+            int   frameNumber = _frameNumber++;
             float timeStamp   = Time.time - _recordingStartTime;
 
             foreach (var recorder in _cameraRecorders) {
