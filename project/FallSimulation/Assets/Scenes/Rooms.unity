@@ -44805,8 +44805,8 @@ MonoBehaviour:
   rootOutputFolder: PoseRecordings
   fileName: fall_recording
   frameRate: 30
-  highestPoseID: 32
-  flipYAxisOutput: 0
+  numberOfPosePoints: 33
+  flipYAxisOutput: 1
 --- !u!1001 &1439960330
 PrefabInstance:
   m_ObjectHideFlags: 0
