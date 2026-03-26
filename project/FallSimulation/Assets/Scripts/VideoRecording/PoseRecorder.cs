@@ -143,7 +143,7 @@ namespace VideoRecording {
 
 #if UNITY_EDITOR
             string videoFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_main_camera");
-            _videoRecorder = new MainCameraVideoRecorder(videoFilePath, frameRate, flipYAxisOutput);
+            _videoRecorder = new MainCameraVideoRecorder(videoFilePath, frameRate);
 #endif
 
             float subjectY = fallCenterPosition.position.y;
