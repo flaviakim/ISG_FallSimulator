@@ -62,7 +62,7 @@ namespace VideoRecording {
             _frames.Add(new FrameEntry {
                 FrameIndex           = frame.FrameIndex,
                 Time                 = frame.Time,
-                Label                = 0.0f,
+                Label                = GameManager.Instance.Status.GetIDForStatus(),
                 LabelStr             = GameManager.Instance.Status.GetLabelStrForStatus(),
                 CameraHeightPosition = _cameraHeightPosition,
                 Skeleton             = new[] {
