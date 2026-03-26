@@ -62,7 +62,7 @@ namespace VideoRecording {
                 FrameIndex           = frame.FrameIndex,
                 Time                 = frame.Time,
                 Label                = 0.0f,
-                LabelStr             = GameManager.Instance.Status,
+                LabelStr             = GameManager.Instance.Status.GetLabelStrForStatus(),
                 CameraHeightPosition = _cameraHeightPosition,
                 Skeleton             = new[] {
                     new SkeletonEntry { Pose = pose, Score = score }
@@ -80,4 +80,36 @@ namespace VideoRecording {
 
         public void Dispose() => Finalize();
     }
+}
+
+public static class ConstantsMovementsExtensions {
+    public static string GetLabelStrForStatus(this ConstantsMovements status) {
+        return status switch {
+            ConstantsMovements.idle => "standing",
+            ConstantsMovements.fall => "fall",
+            ConstantsMovements.walking => "walk",
+            ConstantsMovements.after_fall => "fallen",
+            ConstantsMovements.transition => "standing",
+            ConstantsMovements.animTransitionWalk => "standing",
+            ConstantsMovements.notFall => "other",
+            _ => throw new ArgumentOutOfRangeException(nameof(status), status, null)
+        };
+    }
+    
+    public static int GetIDForStatus(this ConstantsMovements status) {
+        return status.GetLabelStrForStatus() switch {
+            "walk" => 0,
+            "fall" => 1,
+            "fallen" => 2,
+            "sit_down" => 3,
+            "sitting" => 4,
+            "lie_down" => 5,
+            "lying" => 6,
+            "stand_up" => 7,
+            "standing" => 8,
+            "other" => 9,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
 }

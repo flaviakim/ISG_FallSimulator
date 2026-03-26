@@ -23,7 +23,7 @@ public class AnimController : MonoBehaviour {
 	private Vector3 initPos;
 	private bool isOnRagdoll;
 
-	private string prevStatus;
+	private ConstantsMovements prevStatus;
 	private int transitionCount;
 	private bool onTransition;
 
@@ -34,7 +34,7 @@ public class AnimController : MonoBehaviour {
 		get { return onTransition; }
 	}
 
-	public string Status {
+	public ConstantsMovements Status {
 		get { return GameManager.Instance.Status; }
 	}
 
@@ -132,8 +132,8 @@ public class AnimController : MonoBehaviour {
 		anim.enabled = true;
 		onTransition = true;
 		prevStatus = ConstantsMovements.idle;
-		anim.SetInteger(ConstantsMovements.animTransitionWalk, 0);
-		anim.Play(ConstantsMovements.idle);
+		anim.SetInteger(ConstantsMovements.animTransitionWalk.ToAnimationString(), 0);
+		anim.Play(ConstantsMovements.idle.ToAnimationString());
 		GameManager.Instance.Status = ConstantsMovements.transition;
 
 		foreach (CollisionDetector g in generatedColliders) {
@@ -156,18 +156,18 @@ public class AnimController : MonoBehaviour {
 		prevStatus = ConstantsMovements.walking;
 		transitionCount = 2;
 		if (forceAnim >= 0) {
-			anim.SetInteger(ConstantsMovements.animTransitionWalk, forceAnim);
+			anim.SetInteger(ConstantsMovements.animTransitionWalk.ToAnimationString(), forceAnim);
 		}
 		else {
-			anim.SetInteger(ConstantsMovements.animTransitionWalk, UnityEngine.Random.Range(1, walkAnimsCount + 1));
+			anim.SetInteger(ConstantsMovements.animTransitionWalk.ToAnimationString(), UnityEngine.Random.Range(1, walkAnimsCount + 1));
 		}
 
 		//ActionStartWalking.Invoke();
 	}
 
 	public void GoIdle() {
-		anim.SetTrigger(ConstantsMovements.idle);
-		anim.SetInteger(ConstantsMovements.animTransitionWalk, 0);
+		anim.SetTrigger(ConstantsMovements.idle.ToAnimationString());
+		anim.SetInteger(ConstantsMovements.animTransitionWalk.ToAnimationString(), 0);
 	}
 
 	private void CreateCollisionDetectors() {

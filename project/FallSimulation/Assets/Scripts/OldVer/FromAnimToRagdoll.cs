@@ -31,8 +31,8 @@ public class FromAnimToRagdoll : MonoBehaviour {
 
     [SerializeField] private int walkAnims;
 
-    private string status = ConstantsMovements.idle;
-    private string prevStatus;
+    private ConstantsMovements status = ConstantsMovements.idle;
+    private ConstantsMovements prevStatus;
 
     private int transitionCount;
 
@@ -40,7 +40,7 @@ public class FromAnimToRagdoll : MonoBehaviour {
 
     public bool OnTransition {  get { return onTransition; } }
 
-    public string Status {  get { return status; } }
+    public ConstantsMovements Status {  get { return status; } }
 
            
 

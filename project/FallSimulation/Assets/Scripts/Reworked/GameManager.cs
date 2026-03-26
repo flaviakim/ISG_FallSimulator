@@ -47,9 +47,9 @@ public class GameManager : MonoBehaviour {
 	
 	public Action OnReturnNewState = delegate {  };
 
-	[SerializeField] private string status = ConstantsMovements.idle;
+	[SerializeField] private ConstantsMovements status = ConstantsMovements.idle;
 
-	public string Status {
+	public ConstantsMovements Status {
 		get => status;
 		set {
 			prevStatus = status;
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour {
 	public float timeResetRecording;
 	
 
-	private string prevStatus;
+	private ConstantsMovements prevStatus;
 	private float timeStartAfterFall;
 	private float timeDelayStartRecording;
 	private float timeStartWalking;

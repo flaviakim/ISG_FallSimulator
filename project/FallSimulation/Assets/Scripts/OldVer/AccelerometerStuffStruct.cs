@@ -10,9 +10,9 @@ public struct AccelerometerStuffStruct {
     public Vector3 pos2;
     public Vector3 gforce;
 
-    public string movementType;
+    public ConstantsMovements movementType;
 
-    public AccelerometerStuffStruct(float timestamp, float deltaTime, Vector3 values, Vector3 pos1, Vector3 pos2, Vector3 gforce, string movementType) {
+    public AccelerometerStuffStruct(float timestamp, float deltaTime, Vector3 values, Vector3 pos1, Vector3 pos2, Vector3 gforce, ConstantsMovements movementType) {
         this.timestamp = timestamp;
         this.deltaTime = deltaTime;
         this.values = values;
@@ -29,9 +29,9 @@ public struct DeltaPositionsStruct {
     public float deltaTime;
     public Vector3 values;
     public Vector3 gForce;
-    public string movementType;
+    public ConstantsMovements movementType;
 
-    public DeltaPositionsStruct(float timestamp, float deltaTime, Vector3 values, Vector3 gForce, string movementType) {
+    public DeltaPositionsStruct(float timestamp, float deltaTime, Vector3 values, Vector3 gForce, ConstantsMovements movementType) {
         this.timestamp = timestamp;
         this.deltaTime = deltaTime;
         this.values = values;
@@ -40,12 +40,27 @@ public struct DeltaPositionsStruct {
     }
 }
 
-public static class ConstantsMovements {
-    public static string idle = "Idle";
-    public static string fall = "Fall";
-    public static string walking = "Walking";
-    public static string after_fall = "After_fall";
-    public static string transition = "Transition";
-    public static string animTransitionWalk = "TransitionWalk";
-    public static string notFall = "NotFall";
+public enum ConstantsMovements {
+    idle,
+    fall,
+    walking,
+    after_fall,
+    transition,
+    animTransitionWalk,
+    notFall
+}
+
+public static class ConstantsMovementsExtension {
+    public static string ToAnimationString(this ConstantsMovements movement) {
+        return movement switch {
+            ConstantsMovements.idle => "Idle",
+            ConstantsMovements.fall => "Fall",
+            ConstantsMovements.walking => "Walking",
+            ConstantsMovements.after_fall => "After_fall",
+            ConstantsMovements.transition => "Transition",
+            ConstantsMovements.animTransitionWalk => "TransitionWalk",
+            ConstantsMovements.notFall => "NotFall",
+            _ => ""
+        };
+    }
 }
