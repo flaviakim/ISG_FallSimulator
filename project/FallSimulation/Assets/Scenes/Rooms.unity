@@ -44789,14 +44789,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VideoRecording.PoseRecorder
   fallCenterPosition: {fileID: 260145968}
-  numberOfCameras: 30
-  fovMin: 60
-  fovMax: 60
-  distanceFromCenterMin: 5
-  distanceFromCenterMax: 10
-  angleVariance: 10
-  heightMin: 1
-  heightMax: 3
+  cameraPositionsAroundCenterRanges:
+    ranges:
+    - min: 0
+      max: 360
+      recordingCount: 20
+  fovRanges:
+    ranges:
+    - min: 60
+      max: 60
+      recordingCount: 1
+  distanceFromCenterRanges:
+    ranges:
+    - min: 2
+      max: 7
+      recordingCount: 1
+  cameraHorizontalRotationAngleRanges:
+    ranges:
+    - min: -10
+      max: 10
+      recordingCount: 1
+  cameraVerticalRotationAngleRanges:
+    ranges:
+    - min: -5
+      max: 5
+      recordingCount: 1
+  heightRanges:
+    ranges:
+    - min: 1
+      max: 2.5
+      recordingCount: 1
   aboveHeadHeightThreshold: 1.8
   aspectRatio: 1.7777778
   nearClip: 0.1
