@@ -44788,6 +44788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ad4a625525459f8cd7a066cf253844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VideoRecording.PoseRecorder
+  captureFramerate: 1
   fallCenterPosition: {fileID: 260145968}
   cameraPositionsAroundCenterRanges:
     ranges:
@@ -44826,7 +44827,7 @@ MonoBehaviour:
   mode: 1
   rootOutputFolder: PoseRecordings
   fileName: fall_recording
-  frameRate: 30
+  frameRate: 60
   numberOfPosePoints: 33
   flipYAxisOutput: 1
 --- !u!1001 &1439960330
