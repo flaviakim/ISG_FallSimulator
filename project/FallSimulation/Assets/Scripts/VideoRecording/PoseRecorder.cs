@@ -15,7 +15,7 @@ namespace VideoRecording
     public class PoseRecorder : MonoBehaviour
     {
         [SerializeField]
-        private bool captureFramerate = true;
+        private bool recordRGB = true;
 
         [Header("Positions")]
         [SerializeField]
@@ -82,9 +82,11 @@ namespace VideoRecording
         private readonly List<PosePoint> _posePoints = new();
 
         private readonly List<ISingleCameraRecorder> _cameraRecorders = new();
+        
+        private readonly List<CameraVideoRecorder> _realCameraObjects = new();
 
 #if UNITY_EDITOR
-        private MainCameraVideoRecorder _videoRecorder;
+        private CameraVideoRecorder _videoRecorder;
 #endif
 
         // ---- Unity lifecycle ----------------------------------------------
@@ -97,7 +99,7 @@ namespace VideoRecording
                 return;
             }
 
-            if (captureFramerate)
+            if (recordRGB)
             {
                 Time.captureFramerate = frameRate;
                 Time.fixedDeltaTime = 1f / frameRate;
@@ -166,6 +168,12 @@ namespace VideoRecording
 #if UNITY_EDITOR
             _videoRecorder?.Dispose();
             _videoRecorder = null;
+            foreach (CameraVideoRecorder cameraVideoRecorder in _realCameraObjects)
+            {
+                cameraVideoRecorder.Dispose();
+                
+            }
+            _realCameraObjects.Clear();
 #endif
         }
 
@@ -207,7 +215,7 @@ namespace VideoRecording
 
 #if UNITY_EDITOR
             string videoFilePath = Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_main_camera");
-            _videoRecorder = new MainCameraVideoRecorder(videoFilePath, frameRate);
+            _videoRecorder = new CameraVideoRecorder(videoFilePath, frameRate, "MainCamera", Camera.main);
 #endif
 
             float subjectY = fallCenterPosition.position.y;
@@ -241,6 +249,33 @@ namespace VideoRecording
                                         farClip
                                     );
 
+#if UNITY_EDITOR
+                                    if (recordRGB)
+                                    {
+                                        int id = _cameraRecorders.Count;
+                                        string cameraTag = $"Camera_{id}";
+                                        var realCamera = new GameObject(cameraTag).AddComponent<Camera>();
+                                        realCamera.transform.position = cameraPositionInfo.Position;
+                                        realCamera.transform.rotation = cameraPositionInfo.Rotation;
+                                        realCamera.fieldOfView = cameraPositionInfo.FOV;
+                                        realCamera.nearClipPlane = nearClip;
+                                        realCamera.farClipPlane = farClip;
+                                        realCamera.tag = cameraTag;
+                                        realCamera.clearFlags = CameraClearFlags.Color;
+                                        
+                                        var cameraVideoRecorder = new CameraVideoRecorder(
+                                            Path.Combine(outputFolder, $"{fileName}_{startTime:yyyy-MM-dd_HH-mm-ss}_camera_{id}"),
+                                            frameRate,
+                                            cameraTag,
+                                            realCamera,
+                                            flipOutput: true
+                                            );
+                                        cameraVideoRecorder.StartRecording();
+                                        
+                                        _realCameraObjects.Add(cameraVideoRecorder);
+                                    }
+#endif
+                                    
                                     string heightLabel = CameraHeightClassifier.Classify(
                                         cameraPositionInfo.Position.y,
                                         subjectY,

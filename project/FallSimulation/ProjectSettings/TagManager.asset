@@ -2,8 +2,69 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 4
+  tags:
+  - Camera_0
+  - Camera_1
+  - Camera_2
+  - Camera_3
+  - Camera_4
+  - Camera_5
+  - Camera_6
+  - Camera_7
+  - Camera_8
+  - Camera_9
+  - Camera_10
+  - Camera_11
+  - Camera_12
+  - Camera_13
+  - Camera_14
+  - Camera_15
+  - Camera_16
+  - Camera_17
+  - Camera_18
+  - Camera_19
+  - Camera_20
+  - Camera_21
+  - Camera_22
+  - Camera_23
+  - Camera_24
+  - Camera_25
+  - Camera_26
+  - Camera_27
+  - Camera_28
+  - Camera_29
+  - Camera_30
+  - Camera_31
+  - Camera_32
+  - Camera_33
+  - Camera_34
+  - Camera_35
+  - Camera_36
+  - Camera_37
+  - Camera_38
+  - Camera_39
+  - Camera_40
+  - Camera_41
+  - Camera_42
+  - Camera_43
+  - Camera_44
+  - Camera_45
+  - Camera_46
+  - Camera_47
+  - Camera_48
+  - Camera_49
+  - Camera_50
+  - Camera_51
+  - Camera_52
+  - Camera_53
+  - Camera_54
+  - Camera_55
+  - Camera_56
+  - Camera_57
+  - Camera_58
+  - Camera_59
+  - Camera_60
   layers:
   - Default
   - TransparentFX
@@ -41,3 +102,5 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  m_RenderingLayers:
+  - Default
