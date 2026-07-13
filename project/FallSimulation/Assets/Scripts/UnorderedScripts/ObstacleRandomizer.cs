@@ -7,13 +7,16 @@ public class ObstacleRandomizer : MonoBehaviour {
 
     [SerializeField] private Transform minPos;
     [SerializeField] private Transform maxPos;
+    [SerializeField] private bool randomizeOnStart = true;
 
     private Vector3 startingPos;
     private Quaternion startingRot;
 
     private void Start() {
-        GameManager.Instance.OnResetThings += RandomizePosition;
-        //controller.ReturnToAnimation += RandomizePosition;
+        if (randomizeOnStart) {
+            GameManager.Instance.OnResetThings += RandomizePosition;
+            //controller.ReturnToAnimation += RandomizePosition;
+        }
     }
 
     [ContextMenu("RandomizePos")]

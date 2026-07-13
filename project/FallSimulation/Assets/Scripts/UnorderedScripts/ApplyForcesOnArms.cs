@@ -93,7 +93,7 @@ public class ApplyForcesOnArms : MonoBehaviour {
             {
                 rb[i].transform.position = startingPoses[i];
                 rb[i].transform.rotation = startingRots[i];
-                rb[i].velocity = Vector3.zero;
+                rb[i].linearVelocity = Vector3.zero;
             }
         }
     }

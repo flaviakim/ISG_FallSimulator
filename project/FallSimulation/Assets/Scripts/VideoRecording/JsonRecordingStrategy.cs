@@ -1,0 +1,116 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+
+namespace VideoRecording {
+    /// <summary>
+    /// Buffers all frames in memory, then serialises the full JSON array on Finalize().
+    /// Output matches the schema in Format.md.
+    /// </summary>
+    public sealed class JsonRecordingStrategy : IRecordingStrategy {
+        // ---- private DTOs -------------------------------------------------
+
+        private sealed class SkeletonEntry {
+            [JsonProperty("pose")]  public float[] Pose  { get; set; }
+            [JsonProperty("score")] public float[] Score { get; set; }
+        }
+
+        private sealed class FrameEntry {
+            [JsonProperty("frame_index")]            public int            FrameIndex           { get; set; }
+            [JsonProperty("time")]                   public float          Time                 { get; set; }
+            [JsonProperty("label")]                  public float          Label                { get; set; }
+            [JsonProperty("label_str")]              public string         LabelStr             { get; set; }
+            [JsonProperty("camera_height_position")] public string         CameraHeightPosition { get; set; }
+            [JsonProperty("skeleton")]               public SkeletonEntry[] Skeleton            { get; set; }
+        }
+
+        // ---- fields -------------------------------------------------------
+
+        private readonly string _filePath;
+        private readonly string _cameraHeightPosition;
+        private readonly List<FrameEntry> _frames = new();
+        private bool _finalized;
+
+        public JsonRecordingStrategy(string filePath, string cameraHeightPosition) {
+            _filePath             = filePath + ".json";
+            _cameraHeightPosition = cameraHeightPosition;
+        }
+
+        public void Initialize() {
+            // Nothing to open yet — we buffer in memory.
+        }
+
+        public void AppendFrame(FrameData frame) {
+            int jointCount = frame.Joints.Count;
+            var pose  = new float[jointCount * 2];
+            var score = new float[jointCount];
+
+            for (int i = 0; i < jointCount; i++) {
+                var joint = frame.Joints[i];
+                if (joint.HasValue) {
+                    pose[i * 2]     = joint.Value.x;
+                    pose[(i * 2) + 1] = joint.Value.y;
+                    score[i]        = 1f;
+                } else {
+                    pose[i * 2]     = 0f;
+                    pose[(i * 2) + 1] = 0f;
+                    score[i]        = 0f;
+                }
+            }
+
+            _frames.Add(new FrameEntry {
+                FrameIndex           = frame.FrameIndex,
+                Time                 = frame.Time,
+                Label                = GameManager.Instance.Status.GetIDForStatus(),
+                LabelStr             = GameManager.Instance.Status.GetLabelStrForStatus(),
+                CameraHeightPosition = _cameraHeightPosition,
+                Skeleton             = new[] {
+                    new SkeletonEntry { Pose = pose, Score = score }
+                }
+            });
+        }
+
+        public void Finalize() {
+            if (_finalized) return;
+            _finalized = true;
+
+            string json = JsonConvert.SerializeObject(_frames, Formatting.Indented);
+            File.WriteAllText(_filePath, json);
+        }
+
+        public void Dispose() => Finalize();
+    }
+}
+
+public static class ConstantsMovementsExtensions {
+    public static string GetLabelStrForStatus(this ConstantsMovements status) {
+        return status switch {
+            ConstantsMovements.idle => "standing",
+            ConstantsMovements.fall => "fall",
+            ConstantsMovements.walking => "walk",
+            ConstantsMovements.after_fall => "fallen",
+            ConstantsMovements.transition => "standing",
+            ConstantsMovements.animTransitionWalk => "standing",
+            ConstantsMovements.notFall => "other",
+            _ => throw new ArgumentOutOfRangeException(nameof(status), status, null)
+        };
+    }
+    
+    public static int GetIDForStatus(this ConstantsMovements status) {
+        return status.GetLabelStrForStatus() switch {
+            "walk" => 0,
+            "fall" => 1,
+            "fallen" => 2,
+            "sit_down" => 3,
+            "sitting" => 4,
+            "lie_down" => 5,
+            "lying" => 6,
+            "stand_up" => 7,
+            "standing" => 8,
+            "other" => 9,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
+}

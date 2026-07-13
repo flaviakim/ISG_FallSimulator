@@ -9,7 +9,7 @@ public class UIController : MonoBehaviour {
     [SerializeField] private AccelerometerFromDeltaPosition filesaver;
     [SerializeField] private FromAnimToRagdoll anim;
     [SerializeField] private Text animatorName;
-    [SerializeField] private animation_player aPlayer;
+    [SerializeField] private AnimationPlayer aPlayer;
     
 
     private void Start()

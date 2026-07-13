@@ -35,7 +35,7 @@ namespace AnimFollow
 				}
 				GetComponent<Rigidbody>().mass = massOfBall;
 				GetComponent<Rigidbody>().useGravity = false;
-				GetComponent<Rigidbody>().velocity = (hitTransform.position - transform.position).normalized * ballVelocity; // Hurl ball towards hit transform
+				GetComponent<Rigidbody>().linearVelocity = (hitTransform.position - transform.position).normalized * ballVelocity; // Hurl ball towards hit transform
 			}
 		}
 		

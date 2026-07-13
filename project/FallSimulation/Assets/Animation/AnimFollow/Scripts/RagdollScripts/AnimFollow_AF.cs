@@ -231,7 +231,7 @@ namespace AnimFollow
 						localToJointSpace[j] = Quaternion.LookRotation(forward, up);
 						startLocalRotation[j] = slaveTransform.localRotation * localToJointSpace[j];
 						jointDrive = configurableJoints[j].slerpDrive;
-						jointDrive.mode = JointDriveMode.Position;
+						// jointDrive.mode = JointDriveMode.Position;
 						configurableJoints[j].slerpDrive = jointDrive;
 						l++;
 					}
@@ -310,8 +310,8 @@ namespace AnimFollow
 			foreach(Transform slaveRigidTransform in slaveRigidTransforms) // Set some of the Unity parameters
 			{
 				slaveRigidTransform.GetComponent<Rigidbody>().useGravity = useGravity;
-				slaveRigidTransform.GetComponent<Rigidbody>().angularDrag = angularDrag;
-				slaveRigidTransform.GetComponent<Rigidbody>().drag = drag;
+				slaveRigidTransform.GetComponent<Rigidbody>().angularDamping = angularDrag;
+				slaveRigidTransform.GetComponent<Rigidbody>().linearDamping = drag;
 				slaveRigidTransform.GetComponent<Rigidbody>().maxAngularVelocity = maxAngularVelocity;
 				i++;
 			}
@@ -364,8 +364,8 @@ namespace AnimFollow
 
 			for (int i = 0; i < slaveRigidTransforms.Length; i++) // Do for all rigid bodies
 			{
-				slaveRigidbodies[i].angularDrag = angularDrag; // Set rigidbody drag and angular drag in real-time
-				slaveRigidbodies[i].drag = drag;
+				slaveRigidbodies[i].angularDamping = angularDrag; // Set rigidbody drag and angular drag in real-time
+				slaveRigidbodies[i].linearDamping = drag;
 
 				Quaternion targetRotation;
 				if (torque) // Calculate and apply world torque
